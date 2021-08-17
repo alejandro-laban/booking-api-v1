@@ -1,0 +1,43 @@
+{
+  "name": "BookingRegisterMessage",
+  "type": "record",
+  "namespace": "com.alejandrolaban.booking.register",
+  "fields": [
+    {
+      "name": "email",
+      "type": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "checkingInDate",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "checkingOutDate",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "peopleNumber",
+      "type": "int"
+    },
+    {
+      "name": "guestName",
+      "type": "string"
+    },
+    {
+      "name": "roomNumber",
+      "type": "int"
+    },
+    {
+      "name": "minorNumber",
+      "type": "int"
+    }
+  ]
+}
