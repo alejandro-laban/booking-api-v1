@@ -4,6 +4,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.kafka.support.KafkaHeaders;
 
+/**
+ * Kafka custom headers
+ */
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CustomKafkaHeaders {
 

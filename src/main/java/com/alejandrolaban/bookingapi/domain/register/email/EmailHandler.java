@@ -8,10 +8,14 @@ import com.alejandrolaban.bookingapi.infrastructure.exception.ExceptionUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.Map;
+
+/**
+ * Handler for email success and failure
+ */
 
 @Component
 @AllArgsConstructor
@@ -22,15 +26,12 @@ public class EmailHandler {
     private final EmailMapper emailMapper;
     private final ExceptionUtil exceptionUtil;
 
+    @SneakyThrows
     public void sendSuccessful(BookingDocument bookingDocument) {
-        try {
-            var emailDynamicData = emailMapper
-                    .bookingDocumentToEmailDynamicData(bookingDocument)
-                    .withIsSuccessful(Boolean.TRUE);
-            mailService.send(bookingDocument.getEmail(), convertToMap(emailDynamicData));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        var emailDynamicData = emailMapper
+                .bookingDocumentToEmailDynamicData(bookingDocument)
+                .withIsSuccessful(Boolean.TRUE);
+        mailService.send(bookingDocument.getEmail(), convertToMap(emailDynamicData));
     }
 
     private Map<String, Object> convertToMap(Object o) {
@@ -39,17 +40,15 @@ public class EmailHandler {
         }.getType());
     }
 
+    @SneakyThrows
     public void sendFailure(BookingRegisterMessage bookingDocument, Throwable throwable) {
         var emailDynamicData = emailMapper
                 .bookingRegisterMessageToEmailDynamicData(bookingDocument)
                 .withIsSuccessful(Boolean.FALSE)
                 .withErrorDetail(exceptionUtil.getMessageFromThrowable(throwable));
         var parameters = convertToMap(emailDynamicData);
-        try {
-            mailService.send(bookingDocument.getEmail(), parameters);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        mailService.send(bookingDocument.getEmail(), parameters);
     }
 
 }

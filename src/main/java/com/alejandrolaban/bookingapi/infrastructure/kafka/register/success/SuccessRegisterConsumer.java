@@ -14,6 +14,10 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.function.Consumer;
 
+/**
+ * Success registration consumer on success topic that send emails
+ */
+
 @Component
 @AllArgsConstructor
 public class SuccessRegisterConsumer {

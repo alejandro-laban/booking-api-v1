@@ -21,6 +21,10 @@ import reactor.core.scheduler.Schedulers;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
+/**
+ * Failure consumer on DLT topic
+ */
+
 @Component
 @AllArgsConstructor
 public class FailureRegisterConsumer {

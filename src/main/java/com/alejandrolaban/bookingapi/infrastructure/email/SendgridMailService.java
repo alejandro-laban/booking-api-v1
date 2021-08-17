@@ -3,7 +3,6 @@ package com.alejandrolaban.bookingapi.infrastructure.email;
 import com.alejandrolaban.bookingapi.application.BookingConfigurationProperties;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
-import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Email;
@@ -14,6 +13,10 @@ import org.springframework.context.annotation.Configuration;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * Sendgrid implementation to send emails
+ */
+
 @Configuration
 @AllArgsConstructor
 public class SendgridMailService implements MailService {
@@ -23,7 +26,7 @@ public class SendgridMailService implements MailService {
     private final BookingConfigurationProperties bookingConfigurationProperties;
 
     @Override
-    public Response send(String email, Map<String, Object> parameters) throws IOException {
+    public void send(String email, Map<String, Object> parameters) throws IOException {
         BookingConfigurationProperties.Sendgrid sendgrid = bookingConfigurationProperties.getRegister().getSendgrid();
 
         Email from = new Email(sendgrid.getSenderMail());
@@ -46,10 +49,6 @@ public class SendgridMailService implements MailService {
         request.setMethod(Method.POST);
         request.setEndpoint(MAIL_SEND);
         request.setBody(mail.build());
-//        Response response = sg.api(request);
-//        System.out.println(response.getStatusCode());
-//        System.out.println(response.getBody());
-//        System.out.println(response.getHeaders());
-        return new Response();
+        sg.api(request);
     }
 }

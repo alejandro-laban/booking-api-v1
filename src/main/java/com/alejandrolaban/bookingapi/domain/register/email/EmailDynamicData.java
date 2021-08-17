@@ -3,6 +3,10 @@ package com.alejandrolaban.bookingapi.domain.register.email;
 import lombok.Value;
 import lombok.With;
 
+/**
+ * Object with placeholders to use on email
+ */
+
 @Value
 public class EmailDynamicData {
 

@@ -16,9 +16,13 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.function.Function;
 
+/**
+ * Producer on process topic
+ */
+
 @Component
 @AllArgsConstructor
-public class RegisterProducer {
+public class RegisterProcessProducer {
 
     private final KafkaTemplate<String, BookingRegisterMessage> kafkaTemplate;
     private final BookingMapper bookingMapper;

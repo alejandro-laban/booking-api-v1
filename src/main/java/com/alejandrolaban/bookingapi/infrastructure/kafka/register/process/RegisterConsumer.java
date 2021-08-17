@@ -14,6 +14,10 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+/**
+ * Register consumer on process topic and replies on success topic upon successful object registration in database
+ */
+
 @Slf4j
 @Component
 @AllArgsConstructor

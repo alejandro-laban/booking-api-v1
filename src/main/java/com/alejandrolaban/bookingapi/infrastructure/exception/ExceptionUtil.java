@@ -11,6 +11,10 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.stream.Collectors;
 
+/**
+ * Exception util for serialization and deserialization
+ */
+
 @Component
 @AllArgsConstructor
 public class ExceptionUtil {

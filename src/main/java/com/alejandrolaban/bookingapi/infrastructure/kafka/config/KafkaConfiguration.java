@@ -24,6 +24,10 @@ import org.springframework.util.backoff.FixedBackOff;
 import java.nio.charset.StandardCharsets;
 import java.util.function.BiFunction;
 
+/**
+ * Add kafka bean configurations
+ */
+
 @Configuration
 @AllArgsConstructor
 public class KafkaConfiguration {

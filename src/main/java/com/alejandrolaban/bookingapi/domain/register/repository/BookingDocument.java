@@ -9,6 +9,10 @@ import org.springframework.data.annotation.Id;
 
 import java.time.Instant;
 
+/**
+ * Booking document representation on cosmosdb
+ */
+
 @ValidBooking
 @Value
 @Container(containerName = "booking")

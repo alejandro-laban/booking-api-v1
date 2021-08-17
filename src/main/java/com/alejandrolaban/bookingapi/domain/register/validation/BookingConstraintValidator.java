@@ -11,6 +11,10 @@ import java.util.function.Predicate;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+/**
+ * Add constraint validation on class
+ */
+
 public class BookingConstraintValidator implements ConstraintValidator<ValidBooking, BookingDocument> {
 
     @Override

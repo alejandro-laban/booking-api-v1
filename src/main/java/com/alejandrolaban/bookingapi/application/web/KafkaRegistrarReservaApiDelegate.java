@@ -1,7 +1,7 @@
 package com.alejandrolaban.bookingapi.application.web;
 
 import com.alejandrolaban.bookingapi.api.RegistrarReservaApiDelegate;
-import com.alejandrolaban.bookingapi.infrastructure.kafka.register.process.RegisterProducer;
+import com.alejandrolaban.bookingapi.infrastructure.kafka.register.process.RegisterProcessProducer;
 import com.alejandrolaban.bookingapi.model.Booking;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,11 +15,11 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 public class KafkaRegistrarReservaApiDelegate implements RegistrarReservaApiDelegate {
 
-    private final RegisterProducer registerProducer;
+    private final RegisterProcessProducer registerProcessProducer;
 
     @Override
     public Mono<ResponseEntity<Void>> addBooking(Mono<Booking> booking, ServerWebExchange exchange) {
-        return booking.flatMap(registerProducer::register)
+        return booking.flatMap(registerProcessProducer::register)
                 .map(ListenableFuture::completable)
                 .flatMap(Mono::fromFuture)
                 .map(result -> new ResponseEntity<Void>(HttpStatus.ACCEPTED))
