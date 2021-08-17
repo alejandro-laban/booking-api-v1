@@ -1,0 +1,51 @@
+spring:
+  kafka:
+    bootstrap-servers: ${CLOUDKARAFKA_BROKERS}
+    client-id: booking-v1
+    properties:
+      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="${CLOUDKARAFKA_USERNAME}" password="${CLOUDKARAFKA_PASSWORD}";
+      sasl.mechanism: SCRAM-SHA-256
+      security.protocol: SASL_SSL
+      apicurio.registry.url: http://localhost:8080/api
+      apicurio.registry.avro-datum-provider: io.apicurio.registry.utils.serde.avro.ReflectAvroDatumProvider
+      apicurio.registry.global-id: io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy
+      apicurio.registry.artifact-id: io.apicurio.registry.utils.serde.strategy.SimpleTopicIdStrategy
+    consumer:
+      group-id: ${CLOUDKARAFKA_USERNAME}-consumers
+      value-deserializer: io.apicurio.registry.utils.serde.AvroKafkaDeserializer
+      auto-offset-reset: latest
+      key-deserializer: io.apicurio.registry.utils.serde.AvroKafkaDeserializer
+    producer:
+      value-serializer: io.apicurio.registry.utils.serde.AvroKafkaSerializer
+      key-serializer: io.apicurio.registry.utils.serde.AvroKafkaSerializer
+
+booking:
+  register:
+    process:
+      topic: ${CLOUDKARAFKA_USERNAME}-register-process
+    success:
+      topic: ${CLOUDKARAFKA_USERNAME}-register-process.success
+    failure:
+      topic: ${CLOUDKARAFKA_USERNAME}-register-process.DLT
+    sendgrid:
+      sender-mail: "no-reply@alejandrolaban.com"
+      template-id: "d-3e6edead27b2412cbfdc7f05c25d6c7e"
+      subject: "Booking reservation status"
+    error:
+      date-validation: "Invalid date range"
+  search:
+    topic: ${CLOUDKARAFKA_USERNAME}-search
+
+azure:
+  cosmos:
+    uri: https://booking-laban.documents.azure.com:443/
+    database: booking
+  keyvault:
+    client-id: 'a18b954a-71e3-415a-9989-163b7a5fab80'
+    client-key: '11e6YnLI8~fUmjF_es03~4zW~_wyfgwW7l'
+    enabled: true
+    tenant-id: '393e8cca-8c7a-4478-8b74-a6092ef588b7'
+    uri: 'https://booking-laban.vault.azure.net/'
+
+server:
+  port: 7080
