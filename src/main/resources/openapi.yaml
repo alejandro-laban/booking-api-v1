@@ -1,0 +1,130 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/alejandro.laban/booking-api-v1/1.0.0
+info:
+  description: Booking API V1 to manage booking registration and search.
+  version: "1.0.0"
+  title: Booking API V1
+  contact:
+    email: alejandro.laban@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: booking
+    description: Secured booking calls
+paths:
+  '/consultar-reserva':
+    get:
+      tags:
+        - booking
+      summary: searches booking
+      operationId: getAll
+      description: |
+        Retrieves all bookings
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingResponse'
+        '400':
+          description: bad input parameter
+  '/consultar-reserva/{id}':
+    get:
+      tags:
+        - booking
+      summary: searches booking
+      operationId: getById
+      description: |
+        Retrieves booking by id
+      parameters:
+        - in: path
+          name: id
+          description: booking id
+          required: true
+          schema:
+            type: string
+            example: 963ff0f3-6ea2-4d2c-af31-05b1a5339f5e
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingResponse'
+        '400':
+          description: bad input parameter
+  '/registrar-reserva':
+    post:
+      tags:
+        - booking
+      summary: adds an booking item
+      operationId: addBooking
+      description: Adds an item to the system
+      responses:
+        '202':
+          description: item accepted
+        '400':
+          description: 'invalid input, object invalid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+        description: Booking item to add
+components:
+  schemas:
+    BookingResponse:
+      allOf:
+        - $ref: '#/components/schemas/Booking'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 963ff0f3-6ea2-4d2c-af31-05b1a5339f5e
+    Booking:
+      type: object
+      required:
+        - email
+        - checkingInDate
+        - checkingOutDate
+        - peopleNumber
+        - guestName
+        - roomNumber
+        - minorNumber
+      properties:
+        email:
+          type: string
+          example: alejandro.laban@gmail.com
+        checkingInDate:
+          type: string
+          format: date-time
+          example: '2021-08-10T09:12:33.001Z'
+        checkingOutDate:
+          type: string
+          format: date-time
+          example: '2021-08-20T09:12:33.001Z'
+        peopleNumber:
+          type: integer
+          minimum: 1
+          maximum: 10
+          example: 2
+        guestName:
+          type: string
+          example: Alejandro Laban
+        roomNumber:
+          type: integer
+          minimum: 1
+          maximum: 10
+          example: 2
+        minorNumber:
+          type: integer
+          minimum: 1
+          maximum: 10
+          example: 1
